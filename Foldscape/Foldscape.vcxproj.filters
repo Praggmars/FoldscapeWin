@@ -39,6 +39,9 @@
     <ClCompile Include="src\navigator2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\parser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\application.h">
@@ -95,13 +98,13 @@
     <ClInclude Include="inc\ui\textbox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\strfunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="inc\shape2drenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\navigator2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

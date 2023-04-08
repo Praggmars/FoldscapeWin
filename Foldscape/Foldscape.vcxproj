@@ -160,6 +160,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\application.cpp" />
     <ClCompile Include="src\navigator2d.cpp" />
+    <ClCompile Include="src\parser.cpp" />
     <ClCompile Include="src\shape2drenderer.cpp" />
     <ClCompile Include="src\ui\shaderimage.cpp" />
     <ClCompile Include="src\ui\textbox.cpp" />
@@ -182,8 +183,8 @@
     <ClInclude Include="inc\math\vector3.hpp" />
     <ClInclude Include="inc\math\vector4.hpp" />
     <ClInclude Include="inc\navigator2d.h" />
+    <ClInclude Include="inc\parser.h" />
     <ClInclude Include="inc\shape2drenderer.h" />
-    <ClInclude Include="inc\strfunction.h" />
     <ClInclude Include="inc\ui\shaderimage.h" />
     <ClInclude Include="inc\ui\textbox.h" />
   </ItemGroup>

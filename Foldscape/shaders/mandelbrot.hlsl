@@ -12,17 +12,17 @@ RWTexture2D<float4> target : register(u0);
 #define NUMBER2 float2
 #endif
 
-inline NUMBER2 Cpx_Re(NUMBER2 z) { return NUMBER2(z.x, 0.0); }
-inline NUMBER2 Cpx_Im(NUMBER2 z) { return NUMBER2(0.0, z.y); }
-inline NUMBER2 Cpx_Add(NUMBER2 z1, NUMBER2 z2) { return z1 + z2; }
-inline NUMBER2 Cpx_Sub(NUMBER2 z1, NUMBER2 z2) { return z1 - z2; }
-inline NUMBER2 Cpx_Mul(NUMBER2 z1, NUMBER2 z2) { return NUMBER2(z1.x * z2.x - z1.y * z2.y, z1.x * z2.y + z1.y * z2.x); }
-inline NUMBER2 Cpx_Div(NUMBER2 z1, NUMBER2 z2) { return NUMBER2(z1.x * z2.x + z1.y * z2.y, z1.y * z2.x - z1.x * z2.y) / (z2.x * z2.x + z2.y * z2.y); }
-inline NUMBER2 Cpx_Neg(NUMBER2 z) { return -z; }
-inline NUMBER2 Cpx_Pos(NUMBER2 z) { return abs(z); }
+inline NUMBER2 cpx_re(NUMBER2 z) { return NUMBER2(z.x, 0.0); }
+inline NUMBER2 cpx_im(NUMBER2 z) { return NUMBER2(0.0, z.y); }
+inline NUMBER2 cpx_add(NUMBER2 z1, NUMBER2 z2) { return z1 + z2; }
+inline NUMBER2 cpx_sub(NUMBER2 z1, NUMBER2 z2) { return z1 - z2; }
+inline NUMBER2 cpx_mul(NUMBER2 z1, NUMBER2 z2) { return NUMBER2(z1.x * z2.x - z1.y * z2.y, z1.x * z2.y + z1.y * z2.x); }
+inline NUMBER2 cpx_div(NUMBER2 z1, NUMBER2 z2) { return NUMBER2(z1.x * z2.x + z1.y * z2.y, z1.y * z2.x - z1.x * z2.y) / (z2.x * z2.x + z2.y * z2.y); }
+inline NUMBER2 cpx_neg(NUMBER2 z) { return -z; }
+inline NUMBER2 cpx_pos(NUMBER2 z) { return abs(z); }
 
 #if !DOUBLE_PRECISION
-inline float angle(float2 z)
+inline float cpx_ang(float2 z)
 {
 	if (z.x > 0.0f)
 		return atan(z.y / z.x);
@@ -35,26 +35,26 @@ inline float angle(float2 z)
 		return atan(z.y / z.x) + pi;
 	return 0.0f;
 }
-inline float2 Cpx_Abs(float2 z) { return float2(length(z), 0.0f); }
-inline float2 Cpx_Exp(float2 z) { return float2(cos(z.y), sin(z.y)) * exp(z.x); }
-inline float2 Cpx_Log(float2 z) { return float2(log(length(z)), angle(z)); }
-inline float2 Cpx_Pow(float2 z1, float2 z2) { return Cpx_Exp(Cpx_Mul(z2, Cpx_Log(z1))); }
-inline float2 Cpx_Sin(float2 z) { return float2(sin(z.x) * cosh(z.y), cos(z.x) * sinh(z.y)); }
-inline float2 Cpx_Cos(float2 z) { return float2(cos(z.x) * cosh(z.y), -sin(z.x) * sinh(z.y)); }
-inline float2 Cpx_Tan(float2 z)
+inline float2 cpx_abs(float2 z) { return float2(length(z), 0.0f); }
+inline float2 cpx_exp(float2 z) { return float2(cos(z.y), sin(z.y)) * exp(z.x); }
+inline float2 cpx_log(float2 z) { return float2(log(length(z)), cpx_ang(z)); }
+inline float2 cpx_pow(float2 z1, float2 z2) { return cpx_exp(cpx_mul(z2, cpx_log(z1))); }
+inline float2 cpx_sin(float2 z) { return float2(sin(z.x) * cosh(z.y), cos(z.x) * sinh(z.y)); }
+inline float2 cpx_cos(float2 z) { return float2(cos(z.x) * cosh(z.y), -sin(z.x) * sinh(z.y)); }
+inline float2 cpx_tan(float2 z)
 {
 	float cosx = cos(z.x);
 	float sinhy = sinh(z.y);
 	return float2(sin(z.x) * cosx, sinhy * cosh(z.y)) / (cosx * cosx + sinhy * sinhy);
 }
-inline float2 Cpx_Sinh(float2 z) { return sin(float2(-z.y, z.x)); }
-inline float2 Cpx_Cosh(float2 z) { return cos(float2(-z.y, z.x)); }
-inline float2 Cpx_Tanh(float2 z) { return tan(float2(-z.y, z.x)); }
+inline float2 cpx_sinh(float2 z) { return cpx_sin(float2(-z.y, z.x)); }
+inline float2 cpx_cosh(float2 z) { return cpx_cos(float2(-z.y, z.x)); }
+inline float2 cpx_tanh(float2 z) { return cpx_tan(float2(-z.y, z.x)); }
 #endif
 
 
 #ifndef FUNCTION
-#define FUNCTION (Cpx_Mul(z, z) + c)
+#define FUNCTION (cpx_mul(z, z) + c)
 #endif
 
 cbuffer Data
@@ -122,7 +122,7 @@ NUMBER2 Transform(uint2 screen)
 		coord.x *= cb_resolution.x / cb_resolution.y;
 	else
 		coord.y *= cb_resolution.y / cb_resolution.x;
-	return Cpx_Mul(NUMBER2(coord.x, coord.y), NUMBER2(cb_scale.x, cb_scale.y)) + NUMBER2(cb_center.x, cb_center.y);
+	return cpx_mul(NUMBER2(coord.x, coord.y), NUMBER2(cb_scale.x, cb_scale.y)) + NUMBER2(cb_center.x, cb_center.y);
 }
 
 [numthreads(16, 16, 1)]

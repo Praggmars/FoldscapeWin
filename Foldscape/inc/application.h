@@ -2,6 +2,7 @@
 
 #include "ui/shaderimage.h"
 #include "ui/textbox.h"
+#include "parser.h"
 
 namespace foldscape
 {
